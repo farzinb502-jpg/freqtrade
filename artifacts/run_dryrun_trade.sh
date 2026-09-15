@@ -94,7 +94,7 @@ validate_start() {
   : > "$LOGFILE"
   echo "==> Sanity-check: start dry-run bot, wait for worker, then stop"
   set +e
-  timeout 45s freqtrade trade \
+  timeout 25s freqtrade trade \
     --dry-run \
     -c "$CONFIG" \
     --userdir user_data \
@@ -110,10 +110,10 @@ validate_start() {
     exit "$rc"
   fi
   if grep -q "Dry run is enabled" "$LOGFILE" \
-    && grep -q "Starting worker" "$LOGFILE" \
-    && grep -q "running with dry_run enabled" "$LOGFILE"; then
+    && grep -q "running with dry_run enabled" "$LOGFILE" \
+    && grep -q "Changing state to: RUNNING" "$LOGFILE"; then
     echo "OK: dry-run paper bot started (SampleStrategy/config as given), then was stopped."
-    echo "    Confirmed: dry_run enabled, worker started, no live trading."
+    echo "    Confirmed: dry_run enabled, state RUNNING, no live trading."
     exit 0
   fi
   echo "Validation failed: expected dry-run startup lines were missing"

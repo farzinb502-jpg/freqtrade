@@ -148,3 +148,11 @@ Telegram, Discord, webhooks, and FreqUI / API server are **disabled** so this se
 - It will not place or cancel real Binance orders.
 
 Paper trading is for learning the Freqtrade loop (start, logs, simulated fills). It is not a go-live checklist.
+
+## Agent sanity-check
+
+In this environment the paper bot was started with `--dry-run` against Binance.US public data (empty keys), reached `state='RUNNING'` with timeframe 15m and SampleStrategy, subscribed to BTC/ETH/SOL 15m websockets, then was stopped. It does not stay running here; run it locally and leave it up.
+
+```bash
+LOGFILE=artifacts/logs/dryrun-sanity.log ./artifacts/run_dryrun_trade.sh --validate
+```
