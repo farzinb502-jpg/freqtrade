@@ -6,12 +6,16 @@ config*.json
 logfile.txt
 user_data/*
 !user_data/strategy/sample_strategy.py
+!user_data/strategies/
+!user_data/strategies/**
+!user_data/research_spot_usdt.json
 !user_data/notebooks
 !user_data/models
 !user_data/freqaimodels
 user_data/freqaimodels/*
 user_data/models/*
 user_data/notebooks/*
+user_data/strategies/__pycache__/
 freqtrade-plot.html
 freqtrade-profit-plot.html
 freqtrade/rpc/api_server/ui/*
