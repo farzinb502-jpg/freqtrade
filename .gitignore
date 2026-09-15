@@ -1,5 +1,7 @@
 # Freqtrade rules
 config*.json
+!user_data/config_dryrun_crypto.json
+!artifacts/config_dryrun_crypto.json
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal
@@ -9,6 +11,7 @@ user_data/*
 !user_data/strategies/
 !user_data/strategies/**
 !user_data/research_spot_usdt.json
+!user_data/config_dryrun_crypto.json
 !user_data/notebooks
 !user_data/models
 !user_data/freqaimodels

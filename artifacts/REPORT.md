@@ -196,8 +196,13 @@ freqtrade backtesting-show --backtest-directory artifacts/backtest_results
 | `artifacts/backtest_results/*.zip` | Raw Freqtrade exports (trades, config snapshot, strategy copies) |
 | `artifacts/logs/` | Full CLI logs from this run |
 | `user_data/strategies/` | Strategies |
-| `user_data/research_spot_usdt.json` | Live research config |
+| `user_data/research_spot_usdt.json` | Backtest/research config (paper only) |
+| `user_data/config_dryrun_crypto.json` | Paper-trading dry-run config (see `artifacts/DRY_RUN.md`) |
 | `user_data/data/binanceus/` | OHLCV (gitignored; re-download) |
+
+## Paper trading (still not live)
+
+A ready-to-run dry-run bot for the same pairs/timeframe is documented in **`artifacts/DRY_RUN.md`**. Default strategy is SampleStrategy. That does not make it a live edge: it lagged buy-and-hold in these backtests. Never set `dry_run` to false and never add real API keys.
 
 ## Honest conclusion
 
