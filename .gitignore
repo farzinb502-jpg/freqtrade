@@ -78,6 +78,7 @@ coverage.xml
 
 # Django stuff:
 *.log
+!artifacts/logs/*.log
 local_settings.py
 
 # Flask stuff:

@@ -19,10 +19,13 @@ PAIRS=("BTC/USDT" "ETH/USDT" "SOL/USDT")
 
 mkdir -p "$OUT_DIR" artifacts/logs
 
-echo "==> Downloading Binance public OHLCV (spot USDT)"
+echo "==> Downloading public OHLCV (spot USDT)"
+# Binance.com is geo-restricted in some environments (HTTP 451).
+# Prefer --exchange binance; this script defaults to binanceus as a public fallback.
+EXCHANGE="${EXCHANGE:-binanceus}"
 freqtrade download-data \
   -c "$CONFIG" \
-  --exchange binance \
+  --exchange "$EXCHANGE" \
   --days 120 \
   -t 5m 15m \
   --trading-mode spot \

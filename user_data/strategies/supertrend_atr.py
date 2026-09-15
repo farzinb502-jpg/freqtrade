@@ -3,21 +3,20 @@
 Classic ATR Supertrend, long-only.
 
 Intended for paper/backtest research on high-volume USDT pairs.
-Not optimized; ATR period 10 / multiplier 3.0 are common defaults.
+Uses pandas-ta Supertrend (ATR period 10, multiplier 3.0).
 """
 
 from pandas import DataFrame
-import numpy as np
+import pandas_ta as pta
 
 from freqtrade.strategy import IStrategy
-import talib.abstract as ta
 from technical import qtpylib
 
 
 class SupertrendATR(IStrategy):
     """
-    Enter when close crosses above the Supertrend line (trend flips up).
-    Exit when close crosses below the Supertrend line (trend flips down).
+    Enter when Supertrend direction flips from down (-1) to up (+1).
+    Exit when it flips back to down.
     """
 
     INTERFACE_VERSION = 3
@@ -48,56 +47,17 @@ class SupertrendATR(IStrategy):
     order_time_in_force = {"entry": "GTC", "exit": "GTC"}
 
     def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
-        dataframe["atr"] = ta.ATR(dataframe, timeperiod=self.atr_period)
-        hl2 = (dataframe["high"] + dataframe["low"]) / 2.0
-        dataframe["st_upper"] = hl2 + self.atr_multiplier * dataframe["atr"]
-        dataframe["st_lower"] = hl2 - self.atr_multiplier * dataframe["atr"]
-
-        supertrend = np.full(len(dataframe), np.nan)
-        direction = np.ones(len(dataframe))
-        upper = dataframe["st_upper"].to_numpy()
-        lower = dataframe["st_lower"].to_numpy()
-        close = dataframe["close"].to_numpy()
-
-        for i in range(1, len(dataframe)):
-            if np.isnan(upper[i]) or np.isnan(lower[i]):
-                continue
-            # Final upper/lower bands
-            if lower[i] > lower[i - 1] or close[i - 1] < lower[i - 1]:
-                final_lower = lower[i]
-            else:
-                final_lower = lower[i - 1]
-            if upper[i] < upper[i - 1] or close[i - 1] > upper[i - 1]:
-                final_upper = upper[i]
-            else:
-                final_upper = upper[i - 1]
-            lower[i] = final_lower
-            upper[i] = final_upper
-
-            if np.isnan(supertrend[i - 1]):
-                supertrend[i] = final_upper
-                direction[i] = -1
-                continue
-
-            if supertrend[i - 1] == upper[i - 1]:
-                if close[i] > final_upper:
-                    supertrend[i] = final_lower
-                    direction[i] = 1
-                else:
-                    supertrend[i] = final_upper
-                    direction[i] = -1
-            else:
-                if close[i] < final_lower:
-                    supertrend[i] = final_upper
-                    direction[i] = -1
-                else:
-                    supertrend[i] = final_lower
-                    direction[i] = 1
-
-        dataframe["st_upper"] = upper
-        dataframe["st_lower"] = lower
-        dataframe["supertrend"] = supertrend
-        dataframe["st_direction"] = direction
+        st = pta.supertrend(
+            dataframe["high"],
+            dataframe["low"],
+            dataframe["close"],
+            length=self.atr_period,
+            multiplier=self.atr_multiplier,
+        )
+        direction_col = f"SUPERTd_{self.atr_period}_{self.atr_multiplier}"
+        line_col = f"SUPERT_{self.atr_period}_{self.atr_multiplier}"
+        dataframe["st_direction"] = st[direction_col]
+        dataframe["supertrend"] = st[line_col]
         return dataframe
 
     def populate_entry_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
