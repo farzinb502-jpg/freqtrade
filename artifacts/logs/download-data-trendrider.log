@@ -1,0 +1,117 @@
+2026-09-15 01:45:17,244 - freqtrade - INFO - freqtrade 2026.9-dev-3a7248691
+2026-09-15 01:45:17,592 - numexpr.utils - INFO - NumExpr defaulting to 4 
+threads.
+2026-09-15 01:45:18,370 - freqtrade.configuration.load_config - INFO - Using 
+config: user_data/research_spot_usdt.json ...
+2026-09-15 01:45:18,371 - freqtrade.loggers - INFO - Enabling colorized output.
+2026-09-15 01:45:18,371 - freqtrade.loggers - INFO - Logfile configured
+2026-09-15 01:45:18,371 - freqtrade.loggers - INFO - Verbosity set to 0
+2026-09-15 01:45:18,372 - freqtrade.configuration.configuration - INFO - Using 
+exchange binanceus
+2026-09-15 01:45:18,372 - freqtrade.configuration.configuration - INFO - Using 
+user-data directory: /workspace/user_data ...
+2026-09-15 01:45:18,372 - freqtrade.configuration.configuration - INFO - Using 
+data directory: /workspace/user_data/data/binanceus ...
+2026-09-15 01:45:18,373 - freqtrade.configuration.configuration - INFO - 
+timeframes --timeframes: ['15m', '1h', '4h', '1d']
+2026-09-15 01:45:18,373 - freqtrade.configuration.configuration - INFO - 
+Detected --days: 400
+2026-09-15 01:45:18,373 - freqtrade.configuration.configuration - INFO - 
+Detected --trading-mode: spot
+2026-09-15 01:45:18,374 - freqtrade.exchange.check_exchange - INFO - Checking 
+exchange...
+2026-09-15 01:45:18,385 - freqtrade.exchange.check_exchange - INFO - Exchange 
+"binanceus" is officially supported by the Freqtrade development team.
+2026-09-15 01:45:18,385 - freqtrade.configuration.configuration - INFO - Using 
+pairlist from configuration.
+2026-09-15 01:45:18,386 - freqtrade.configuration.config_validation - INFO - 
+Validating configuration ...
+2026-09-15 01:45:18,970 - freqtrade.exchange.exchange - INFO - Instance is 
+running with dry_run enabled
+2026-09-15 01:45:18,971 - freqtrade.exchange.exchange - INFO - Using CCXT 4.5.78
+2026-09-15 01:45:18,987 - freqtrade.exchange.exchange - INFO - Using Exchange 
+"Binance US"
+2026-09-15 01:45:18,988 - freqtrade.resolvers.exchange_resolver - INFO - Using 
+resolved exchange class 'Binanceus' ...
+2026-09-15 01:45:18,988 - freqtrade.exchange.exchange - INFO - Markets were not 
+loaded. Loading them now..
+2026-09-15 01:45:19,521 - freqtrade.data.history.history_utils - INFO - About to
+download pairs: ['BTC/USDT', 'ETH/USDT', 'SOL/USDT'], intervals: ['15m', '1h', 
+'4h', '1d'] to /workspace/user_data/data/binanceus
+2026-09-15 01:45:19,565 - freqtrade.data.history.history_utils - INFO - 
+BTC/USDT, 15m, spot: Requested start date 2025-08-11 00:00:00 earlier than local
+data start date 2026-05-18 00:00:00. Use `--prepend` to download data prior to 
+2026-05-18 00:00:00, or `--erase` to redownload all data.
+2026-09-15 01:45:19,566 - freqtrade.data.history.history_utils - INFO - Download
+history data for "BTC/USDT", 15m, spot and store in 
+/workspace/user_data/data/binanceus. From 2026-09-15T00:00:00 to now
+2026-09-15 01:45:19,877 - freqtrade.data.history.history_utils - INFO - 
+Downloaded data for BTC/USDT, 15m, spot with length 7.
+2026-09-15 01:45:19,893 - freqtrade.data.history.history_utils - INFO - Download
+history data for "BTC/USDT", 1h, spot and store in 
+/workspace/user_data/data/binanceus. From 2025-08-11T00:00:00 to now
+2026-09-15 01:45:20,811 - freqtrade.data.history.history_utils - INFO - 
+Downloaded data for BTC/USDT, 1h, spot with length 9592.
+2026-09-15 01:45:20,822 - freqtrade.data.history.history_utils - INFO - Download
+history data for "BTC/USDT", 4h, spot and store in 
+/workspace/user_data/data/binanceus. From 2025-08-11T00:00:00 to now
+2026-09-15 01:45:21,787 - freqtrade.data.history.history_utils - INFO - 
+Downloaded data for BTC/USDT, 4h, spot with length 2398.
+2026-09-15 01:45:21,793 - freqtrade.data.history.history_utils - INFO - 
+Downloading parallel candles for 1d for all pairs since 2025-08-11T00:00:00
+2026-09-15 01:45:22,243 - freqtrade.data.history.history_utils - INFO - Download
+history data for "BTC/USDT", 1d, spot and store in 
+/workspace/user_data/data/binanceus. From 2025-08-11T00:00:00 to now
+2026-09-15 01:45:22,982 - freqtrade.data.history.history_utils - INFO - 
+Downloaded data for BTC/USDT, 1d, spot with length 400.
+2026-09-15 01:45:22,995 - freqtrade.data.history.history_utils - INFO - 
+ETH/USDT, 15m, spot: Requested start date 2025-08-11 00:00:00 earlier than local
+data start date 2026-05-18 00:00:00. Use `--prepend` to download data prior to 
+2026-05-18 00:00:00, or `--erase` to redownload all data.
+2026-09-15 01:45:22,996 - freqtrade.data.history.history_utils - INFO - Download
+history data for "ETH/USDT", 15m, spot and store in 
+/workspace/user_data/data/binanceus. From 2026-09-15T00:00:00 to now
+2026-09-15 01:45:23,122 - freqtrade.data.history.history_utils - INFO - 
+Downloaded data for ETH/USDT, 15m, spot with length 7.
+2026-09-15 01:45:23,136 - freqtrade.data.history.history_utils - INFO - Download
+history data for "ETH/USDT", 1h, spot and store in 
+/workspace/user_data/data/binanceus. From 2025-08-11T00:00:00 to now
+2026-09-15 01:45:24,069 - freqtrade.data.history.history_utils - INFO - 
+Downloaded data for ETH/USDT, 1h, spot with length 9592.
+2026-09-15 01:45:24,078 - freqtrade.data.history.history_utils - INFO - Download
+history data for "ETH/USDT", 4h, spot and store in 
+/workspace/user_data/data/binanceus. From 2025-08-11T00:00:00 to now
+2026-09-15 01:45:24,573 - freqtrade.data.history.history_utils - INFO - 
+Downloaded data for ETH/USDT, 4h, spot with length 2398.
+2026-09-15 01:45:24,579 - freqtrade.data.history.history_utils - INFO - Download
+history data for "ETH/USDT", 1d, spot and store in 
+/workspace/user_data/data/binanceus. From 2025-08-11T00:00:00 to now
+2026-09-15 01:45:24,854 - freqtrade.data.history.history_utils - INFO - 
+Downloaded data for ETH/USDT, 1d, spot with length 400.
+2026-09-15 01:45:24,869 - freqtrade.data.history.history_utils - INFO - 
+SOL/USDT, 15m, spot: Requested start date 2025-08-11 00:00:00 earlier than local
+data start date 2026-05-18 00:00:00. Use `--prepend` to download data prior to 
+2026-05-18 00:00:00, or `--erase` to redownload all data.
+2026-09-15 01:45:24,869 - freqtrade.data.history.history_utils - INFO - Download
+history data for "SOL/USDT", 15m, spot and store in 
+/workspace/user_data/data/binanceus. From 2026-09-15T00:00:00 to now
+2026-09-15 01:45:24,997 - freqtrade.data.history.history_utils - INFO - 
+Downloaded data for SOL/USDT, 15m, spot with length 7.
+2026-09-15 01:45:25,019 - freqtrade.data.history.history_utils - INFO - Download
+history data for "SOL/USDT", 1h, spot and store in 
+/workspace/user_data/data/binanceus. From 2025-08-11T00:00:00 to now
+2026-09-15 01:45:25,479 - freqtrade.data.history.history_utils - INFO - 
+Downloaded data for SOL/USDT, 1h, spot with length 9592.
+2026-09-15 01:45:25,490 - freqtrade.data.history.history_utils - INFO - Download
+history data for "SOL/USDT", 4h, spot and store in 
+/workspace/user_data/data/binanceus. From 2025-08-11T00:00:00 to now
+2026-09-15 01:45:25,805 - freqtrade.data.history.history_utils - INFO - 
+Downloaded data for SOL/USDT, 4h, spot with length 2398.
+2026-09-15 01:45:25,810 - freqtrade.data.history.history_utils - INFO - Download
+history data for "SOL/USDT", 1d, spot and store in 
+/workspace/user_data/data/binanceus. From 2025-08-11T00:00:00 to now
+2026-09-15 01:45:26,081 - freqtrade.data.history.history_utils - INFO - 
+Downloaded data for SOL/USDT, 1d, spot with length 400.
+Timeframe            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4/4 100% • 0:00:03 • 0:00:00
+Downloading SOL/USDT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3/3 100% • 0:00:06 • 0:00:00
+

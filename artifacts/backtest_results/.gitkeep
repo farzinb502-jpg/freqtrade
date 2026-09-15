@@ -1,0 +1,1 @@
+# Keep this directory in git. OHLCV downloads stay in user_data/data/ (gitignored).
