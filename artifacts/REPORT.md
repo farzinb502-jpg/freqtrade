@@ -35,7 +35,7 @@ Equal-weight average ≈ **+32.7%** (Freqtrade reported market change **+33.11%*
 
 ## Strategies
 
-None of these were hyperopted. Parameters are textbook defaults. Core Freqtrade code was not changed.
+The original four were not hyperopted here (textbook defaults). `TrendRiderStrategy` ships upstream hyperopt `buy_params`; we did not re-optimize them. Core Freqtrade code was not changed.
 
 | Strategy | File | Style | Notes |
 | --- | --- | --- | --- |
@@ -43,6 +43,7 @@ None of these were hyperopted. Parameters are textbook defaults. Core Freqtrade 
 | `TrendFollowingEMA` | `user_data/strategies/trend_following_ema.py` | Trend | EMA 20/50 crossover with ADX > 20. |
 | `MomentumMACD` | `user_data/strategies/momentum_macd.py` | Momentum | MACD signal cross, close > EMA 50, RSI > 50. |
 | `SupertrendATR` | `user_data/strategies/supertrend_atr.py` | Trend | pandas-ta Supertrend (ATR 10, multiplier 3). |
+| `TrendRiderStrategy` | `user_data/strategies/trendrider_strategy.py` | Trend (MIT, adapted) | From [darkvolg/trendrider-strategy](https://github.com/darkvolg/trendrider-strategy). Native 1h, MTF 4h/1d, cascade early-loss exits. **Lost vs SampleStrategy** — see `artifacts/TRENDRIDER_COMPARE.md`. |
 
 Config: `user_data/research_spot_usdt.json` (copy at `artifacts/research_spot_usdt.json`). Exchange `key` / `secret` are empty strings. Telegram and the API server are disabled.
 
@@ -56,8 +57,11 @@ Capital shared across the three pairs, `max_open_trades=3`, start 1000 USDT.
 | 2 | TrendFollowingEMA | 101 | 16.8% | **-33.66 USDT (−3.37%)** | 0.87 | 7.58% | −0.33 (−0.10) |
 | 3 | SupertrendATR | 460 | 28.9% | **-161.25 USDT (−16.12%)** | 0.78 | 22.36% | −0.35 (−0.16) |
 | 4 | MomentumMACD | 600 | 25.2% | **-191.96 USDT (−19.20%)** | 0.71 | 24.92% | −0.32 (−0.22) |
+| 5 | TrendRiderStrategy | 395 | 22.8% | **-217.72 USDT (−21.77%)** | 0.64 | 23.44% | −0.55 (−0.28) |
 
-`SampleStrategy` is the only combined-book winner. That win is not a day-trading edge:
+A later Freqtrade-native candidate, `TrendRiderStrategy`, was **not** a fifth combined-book winner. Same 15m window and 0.10% fees: **−21.77%**, profit factor **0.64**, 395 trades. Details in `artifacts/TRENDRIDER_COMPARE.md`.
+
+`SampleStrategy` is the only combined-book winner among the original four (and still beats TrendRider). That win is not a day-trading edge:
 
 - Almost every winner exited on the **1% ROI timer**, not a trend capture.
 - Two SOL stoplosses at **−10%** wiped a large chunk of the clipped wins.
@@ -177,6 +181,12 @@ freqtrade backtesting \
 python artifacts/summarize_backtests.py
 ```
 
+TrendRider vs SampleStrategy (downloads 1h/4h/1d, then 15m + 1h books):
+
+```bash
+./artifacts/run_trendrider_compare.sh
+```
+
 Reprint a saved result:
 
 ```bash
@@ -188,10 +198,12 @@ freqtrade backtesting-show --backtest-directory artifacts/backtest_results
 | Path | What |
 | --- | --- |
 | `artifacts/REPORT.md` | This file |
-| `artifacts/comparison_table.md` | Generated ranked tables |
+| `artifacts/TRENDRIDER_COMPARE.md` | TrendRider vs SampleStrategy (same window/fees) |
+| `artifacts/comparison_table.md` | Generated ranked tables (original four strategies) |
 | `artifacts/comparison_table.csv` | Same metrics as CSV |
 | `artifacts/research_spot_usdt.json` | Copy of the dry-run config |
 | `artifacts/run_research_backtests.sh` | Reproduction script |
+| `artifacts/run_trendrider_compare.sh` | TrendRider vs SampleStrategy backtests |
 | `artifacts/summarize_backtests.py` | Zip → table extractor |
 | `artifacts/backtest_results/*.zip` | Raw Freqtrade exports (trades, config snapshot, strategy copies) |
 | `artifacts/logs/` | Full CLI logs from this run |
@@ -199,6 +211,12 @@ freqtrade backtesting-show --backtest-directory artifacts/backtest_results
 | `user_data/research_spot_usdt.json` | Backtest/research config (paper only) |
 | `user_data/config_dryrun_crypto.json` | Paper-trading dry-run config (see `artifacts/DRY_RUN.md`) |
 | `user_data/data/binanceus/` | OHLCV (gitignored; re-download) |
+
+## TrendRider follow-up (still paper)
+
+Keep Freqtrade. Do not migrate frameworks. We mined an awesome-list Freqtrade strategy ([TrendRider](https://github.com/darkvolg/trendrider-strategy), MIT) and ran it on this fork’s Binance.US spot path.
+
+**Result:** TrendRider lost to SampleStrategy on expectancy and profit factor at both 15m (apples-to-apples) and 1h (TrendRider native). Paper default stays SampleStrategy. Full numbers, Bybit-only leftovers, and the keep/switch recommendation: **`artifacts/TRENDRIDER_COMPARE.md`**.
 
 ## Paper trading (still not live)
 
@@ -214,6 +232,7 @@ It is **not** a reason to day-trade BTC/ETH/SOL on these signals. In a 91-day bu
 - EMA trend, MACD momentum, and Supertrend also lost after fees on the combined 15m book.
 - The official sample’s +12% is tight ROI harvesting that still **underperformed holding the coins**, and it lost on SOL.
 - 5m made the losing strategies lose faster.
+- TrendRider (open-source Freqtrade, MIT) also lost after fees on this window (−22% at 15m, −13% at 1h). Listings are not backtests.
 
 Next research (still paper-only): longer sample including a downtrend, walk-forward / out-of-sample, and a buy-and-hold benchmark as a required baseline — not more live keys.
 

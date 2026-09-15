@@ -4,11 +4,11 @@
 
 This is a simulated bot that reads **public** market data and pretends to trade. It will not place orders on the exchange. It is **not** a signal that SampleStrategy (or any strategy here) is profitable live.
 
-Backtest reminder from `artifacts/REPORT.md`:
+Backtest reminder from `artifacts/REPORT.md` and `artifacts/TRENDRIDER_COMPARE.md`:
 
-- Combined 15m book (91 days): SampleStrategy **+12%**, EMA trend **−3%**, Supertrend **−16%**, MACD **−19%**.
+- Combined 15m book (91 days): SampleStrategy **+12%**, EMA trend **−3%**, Supertrend **−16%**, MACD **−19%**, TrendRider **−22%**.
 - Buy-and-hold in the same window: BTC **+17%**, ETH **+43%**, SOL **+39%**.
-- **SampleStrategy lagged buy-and-hold.** Dry-run paper trading will not magically fix that.
+- **SampleStrategy lagged buy-and-hold.** TrendRider lost to SampleStrategy on profit factor and expectancy (15m PF 0.64 vs 2.52; 1h native also lost). Dry-run paper trading will not magically fix that.
 
 Do **not** set `"dry_run": false`. Do **not** paste live API keys into this config.
 
@@ -58,7 +58,18 @@ freqtrade trade --dry-run -c user_data/config_dryrun_crypto.json -s SupertrendAT
 STRATEGY=TrendFollowingEMA ./artifacts/run_dryrun_trade.sh
 ```
 
-Available class names: `SampleStrategy`, `TrendFollowingEMA`, `MomentumMACD`, `SupertrendATR` under `user_data/strategies/`.
+Available class names under `user_data/strategies/`: `SampleStrategy`, `TrendFollowingEMA`, `MomentumMACD`, `SupertrendATR`, `TrendRiderStrategy`.
+
+**Do not switch the paper default to TrendRider.** Same 91-day / 0.10% fee book: it lost (−22% at 15m, −13% at native 1h) with profit factor well below 1. SampleStrategy stays the default because it was the only green combined book — not because it beats holding BTC/ETH/SOL. Full write-up: `artifacts/TRENDRIDER_COMPARE.md`.
+
+If you only want to watch TrendRider’s simulated fills (still `--dry-run`, empty keys):
+
+```bash
+# optional research only — this strategy lost the compare
+freqtrade trade --dry-run -c user_data/config_dryrun_crypto.json -s TrendRiderStrategy
+```
+
+Prefer `"timeframe": "1h"` in the JSON for that experiment (TrendRider’s native bar). Restart after editing. This is not a recommendation to paper-trade it as a candidate for live.
 
 ## Install (once)
 
